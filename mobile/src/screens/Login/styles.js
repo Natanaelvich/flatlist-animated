@@ -1,12 +1,29 @@
 import styled, {css} from 'styled-components/native';
 
 import {colors} from '../../core/helper';
+import logo from '../../assets/logo.png';
+import backgroundImage from '../../assets/login/fundo.png';
 
 export const Container = styled.View`
   display: flex;
   height: 100%;
+  width: 100%;
   align-items: center;
-  justify-content: center;
+  background-color: #fff;
+  /*background: #fff url(${backgroundImage}) no-repeat 100% top;*/
+`;
+
+export const Background = styled.ImageBackground`
+  display: flex;
+  background: #fff url(${backgroundImage}) no-repeat 100% top;
+`;
+
+export const Logo = styled.Image`
+  background: #fff url(${logo});
+  width: 500px;
+  height: 250px;
+  margin-top: -200px;
+  margin-bottom: 50px;
 `;
 
 export const Label = styled.Text`
