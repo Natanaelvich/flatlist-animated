@@ -5,11 +5,11 @@ import {View, ImageBackground, Image} from 'react-native';
 import logo from '../assets/logo.png';
 import backgroundImage from '../assets/login/fundo.png';
 
-const Logo = () => (
+const Logo = ({height}) => (
   <View
     style={{
       width: '100%',
-      height: 450,
+      height,
     }}>
     <ImageBackground
       source={backgroundImage}

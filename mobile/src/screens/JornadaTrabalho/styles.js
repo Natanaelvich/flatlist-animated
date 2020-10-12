@@ -33,8 +33,21 @@ export const Background = styled.ImageBackground.attrs({
   align-items: center;
 `;
 
+export const ContainerCentral = styled.View`
+  align-items: center;
+  padding-top: 10px;
+`;
+
 export const ContainerLeft = styled.View`
   flex-direction: column;
+  width: 50%;
+`;
+
+export const ContainerRight = styled.View`
+  flex-direction: row;
+  width: 50%;
+  align-items: center;
+  justify-content: flex-end;
 `;
 
 export const ContainerVertical = styled.View`
@@ -43,6 +56,7 @@ export const ContainerVertical = styled.View`
 
 export const ContainerHorizontal = styled.View`
   flex-direction: row;
+  align-items: center;
 `;
 
 export const Text = styled.Text`
@@ -75,9 +89,9 @@ export const Botao = styled.TouchableOpacity`
       : css`
           background-color: #fff;
         `};
-  margin-top: 40px;
+  margin-top: 20px;
   height: 60px;
-  width: 250px;
+  width: 350px;
   border-radius: 5px;
   padding: 5px;
   justify-content: center;

@@ -7,8 +7,10 @@ import {
   ContainerJornada,
   ContainerStatus,
   ContainerLeft,
+  ContainerRight,
   ContainerHorizontal,
   ContainerVertical,
+  ContainerCentral,
   Background,
   Botao,
   TextoBotao,
@@ -18,7 +20,7 @@ import {
 function JornadaTrabalho() {
   return (
     <>
-      <Logo />
+      <Logo height={350} />
       <ContainerStatus>
         <ContainerLeft>
           <Text fontSize={16} title>
@@ -32,10 +34,39 @@ function JornadaTrabalho() {
             </ContainerVertical>
           </ContainerHorizontal>
         </ContainerLeft>
+        <ContainerRight>
+          <Icons name="timer" size={50} color="#fff" />
+          <ContainerVertical>
+            <Text fontSize={20} title>
+              Status:
+            </Text>
+            <Text fontSize={18}>Jornada Não Iniciada</Text>
+          </ContainerVertical>
+        </ContainerRight>
       </ContainerStatus>
       <ContainerJornada>
         <Background>
-          <Text>teste</Text>
+          <ContainerCentral>
+            <ContainerHorizontal>
+              <Icons
+                name="steering"
+                size={45}
+                color="#fff"
+                style={{marginRight: 10}}
+              />
+              <Text fontSize={22}>Veículo: </Text>
+            </ContainerHorizontal>
+            <Text fontSize={60}>JORNADA DE TRABALHO</Text>
+            <Botao principal>
+              <TextoBotao principal>INICIAR</TextoBotao>
+            </Botao>
+            <Botao>
+              <TextoBotao>PARADA/MOTIVO</TextoBotao>
+            </Botao>
+            <Botao>
+              <TextoBotao>FIM</TextoBotao>
+            </Botao>
+          </ContainerCentral>
         </Background>
       </ContainerJornada>
     </>

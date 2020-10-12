@@ -20,7 +20,7 @@ function Login({navigation}) {
 
   return (
     <>
-      <Logo />
+      <Logo height={450} />
       <Container>
         <Label color={colors.laranja}>LOGIN</Label>
         <Input onChangeText={text => setLogin(text)} value={login} />
