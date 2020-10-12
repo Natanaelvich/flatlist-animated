@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Logo from '../../components/logo';
 
@@ -10,14 +10,18 @@ import {
   ContainerRight,
   ContainerHorizontal,
   ContainerVertical,
-  ContainerCentral,
+  Center,
   Background,
   Botao,
   TextoBotao,
   Text,
 } from './styles';
 
-function JornadaTrabalho() {
+function JornadaTrabalho({navigation}) {
+  function irDetalhes() {
+    navigation.push('Detalhes');
+  }
+
   return (
     <>
       <Logo height={350} />
@@ -36,17 +40,19 @@ function JornadaTrabalho() {
         </ContainerLeft>
         <ContainerRight>
           <Icons name="timer" size={50} color="#fff" />
-          <ContainerVertical>
-            <Text fontSize={20} title>
-              Status:
-            </Text>
-            <Text fontSize={18}>Jornada Não Iniciada</Text>
-          </ContainerVertical>
+          <TouchableOpacity onPress={irDetalhes}>
+            <ContainerVertical>
+              <Text fontSize={20} title>
+                Status:
+              </Text>
+              <Text fontSize={18}>Jornada Não Iniciada</Text>
+            </ContainerVertical>
+          </TouchableOpacity>
         </ContainerRight>
       </ContainerStatus>
       <ContainerJornada>
         <Background>
-          <ContainerCentral>
+          <Center>
             <ContainerHorizontal>
               <Icons
                 name="steering"
@@ -66,7 +72,7 @@ function JornadaTrabalho() {
             <Botao>
               <TextoBotao>FIM</TextoBotao>
             </Botao>
-          </ContainerCentral>
+          </Center>
         </Background>
       </ContainerJornada>
     </>

@@ -4,19 +4,22 @@ import {colors} from '../../core/helper';
 
 import fundo from '../../assets/fundo-azul.jpg';
 
-export const ContainerStatus = styled.View`
+export const Header = styled.View`
   display: flex;
   flex: 1;
   flex-direction: row;
-  padding: 10px 30px 5px 30px;
+  align-items: center;
+  padding: 45px 30px 45px 30px;
   background-color: ${colors.azulEscuro};
+  width: 100%;
   height: 100%;
-  max-height: 90px;
+  max-height: 110px;
 `;
 
-export const ContainerJornada = styled.View`
+export const ContainerPrincipal = styled.View`
   display: flex;
   flex: 1;
+  align-items: center;
   height: 100%;
   width: 100%;
   background-color: ${colors.azul};
@@ -34,20 +37,9 @@ export const Background = styled.ImageBackground.attrs({
 `;
 
 export const Center = styled.View`
+  flex: 1;
   align-items: center;
-  padding-top: 10px;
-`;
-
-export const ContainerLeft = styled.View`
-  flex-direction: column;
-  width: 50%;
-`;
-
-export const ContainerRight = styled.View`
-  flex-direction: row;
-  width: 50%;
-  align-items: center;
-  justify-content: flex-end;
+  margin-left: -40px;
 `;
 
 export const ContainerVertical = styled.View`
@@ -57,6 +49,16 @@ export const ContainerVertical = styled.View`
 export const ContainerHorizontal = styled.View`
   flex-direction: row;
   align-items: center;
+`;
+
+export const Card = styled.View`
+  background-color: #fff;
+  /*border-width: 1px;
+  border-style: solid;*/
+  width: 90%;
+  height: 90px;
+  margin-top: 20px;
+  border-radius: 5px;
 `;
 
 export const Text = styled.Text`
@@ -78,35 +80,4 @@ export const Text = styled.Text`
       : css`
           font-weight: normal;
         `}
-`;
-
-export const Botao = styled.TouchableOpacity`
-  ${props =>
-    props.principal
-      ? css`
-          background-color: ${colors.laranja};
-        `
-      : css`
-          background-color: #fff;
-        `};
-  margin-top: 20px;
-  height: 60px;
-  width: 350px;
-  border-radius: 5px;
-  padding: 5px;
-  justify-content: center;
-`;
-
-export const TextoBotao = styled.Text`
-  ${props =>
-    props.principal
-      ? css`
-          color: #fff;
-        `
-      : css`
-          color: ${colors.azul};
-        `};
-  text-align: center;
-  font-weight: bold;
-  font-size: 30px;
 `;
