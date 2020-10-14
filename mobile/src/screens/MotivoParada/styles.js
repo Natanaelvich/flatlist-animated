@@ -16,6 +16,14 @@ export const Header = styled.View`
   max-height: 110px;
 `;
 
+export const SubHeader = styled(Header)`
+  background-color: ${colors.azulMaisEscuro};
+  padding: 0;
+  max-height: 70px;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const ContainerPrincipal = styled.View`
   display: flex;
   flex: 1;
@@ -42,9 +50,13 @@ export const Center = styled.View`
   ${props =>
     props.titleHeader
       ? css`
-          margin-left: -60px;
+          margin-left: -65px;
         `
-      : null}
+      : css`
+          flex-direction: row;
+          justify-content: center;
+          max-height: 80px;
+        `}
 `;
 
 export const ContainerVertical = styled.View`
@@ -73,7 +85,7 @@ export const Card = styled.View`
 `;
 
 export const Text = styled.Text`
-  color: ${colors.azulEscuro};
+  color: #fff;
   /*font-family: Roboto, sans-serif;*/
   ${props =>
     props.fontSize
@@ -93,10 +105,50 @@ export const Text = styled.Text`
         `}
 `;
 
-export const CircleIcon = styled.View`
+export const CircleIconBorder = styled.View`
   border-width: 3px;
   border-color: #fff;
   border-radius: 30px;
   width: 60px;
   align-items: center;
+`;
+
+export const CircleIconTemp = styled.View`
+  background-color: #fff;
+  width: 90px;
+  height: 90px;
+  border-radius: 45px;
+  justify-content: center;
+  align-items: center;
+  padding-right: 5px;
+`;
+
+export const Exagon = styled.View`
+  width: 100px;
+  height: 100px;
+  background: #fff;
+  position: relative;
+
+  &:before {
+    content: '';
+    width: 100px;
+    height: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-bottom: 29px solid red;
+    border-left: 29px solid #eee;
+    border-right: 29px solid #eee;
+  }
+  &:after {
+    content: '';
+    width: 100px;
+    height: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-top: 29px solid red;
+    border-left: 29px solid #eee;
+    border-right: 29px solid #eee;
+  }
 `;

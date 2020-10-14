@@ -1,16 +1,18 @@
 import React from 'react';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, View, StyleSheet} from 'react-native';
 
 import {
   Header,
+  SubHeader,
   ContainerPrincipal,
   Background,
   Center,
   ContainerVertical,
   Card,
   Text,
-  CircleIcon,
+  CircleIconBorder,
+  CircleIconTemp,
 } from './styles';
 import {colors} from '../../core/helper';
 
@@ -19,18 +21,29 @@ function MotivoParada({navigation}) {
     <>
       <Header>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <CircleIcon>
+          <CircleIconBorder>
             <Icons name="arrow-left-thick" size={50} color="#fff" />
-          </CircleIcon>
+          </CircleIconBorder>
         </TouchableOpacity>
         <Center titleHeader>
-          <Icons name="hand-right" size={90} color="#fff" />
+          <CircleIconTemp>
+            <Icons name="hand-right" size={70} color={colors.azulEscuro} />
+          </CircleIconTemp>
         </Center>
       </Header>
+      <SubHeader>
+        <Text fontSize={30}>Motivo de parada</Text>
+      </SubHeader>
       <ContainerPrincipal>
         <Background>
           <Center>
-            <Icons name="steering" size={70} color="#fff" />
+            <Icons
+              name="steering"
+              size={50}
+              color="#fff"
+              style={{marginRight: 10}}
+            />
+            <Text fontSize={30}>Veículo: BR1234</Text>
           </Center>
         </Background>
       </ContainerPrincipal>
