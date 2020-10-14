@@ -44,6 +44,8 @@ export const Center = styled.View`
 
 export const ContainerVertical = styled.View`
   flex-direction: column;
+  padding-left: 20px;
+  justify-content: center;
 `;
 
 export const ContainerHorizontal = styled.View`
@@ -55,14 +57,18 @@ export const Card = styled.View`
   background-color: #fff;
   /*border-width: 1px;
   border-style: solid;*/
+  flex: 1;
+  flex-direction: row;
   width: 90%;
-  height: 90px;
+  max-height: 120px;
   margin-top: 20px;
   border-radius: 5px;
+  align-items: center;
+  padding-horizontal: 25px;
 `;
 
 export const Text = styled.Text`
-  color: #fff;
+  color: ${colors.azulEscuro};
   /*font-family: Roboto, sans-serif;*/
   ${props =>
     props.fontSize
@@ -80,4 +86,12 @@ export const Text = styled.Text`
       : css`
           font-weight: normal;
         `}
+`;
+
+export const CircleIcon = styled.View`
+  border-width: 3px;
+  border-color: #fff;
+  border-radius: 30px;
+  width: 60px;
+  align-items: center;
 `;
