@@ -69,7 +69,7 @@ function JornadaTrabalho({navigation}) {
             <Botao>
               <TextoBotao>PARADA/MOTIVO</TextoBotao>
             </Botao>
-            <Botao>
+            <Botao onPress={() => navigation.push('MotivoParada')}>
               <TextoBotao>FIM</TextoBotao>
             </Botao>
           </Center>

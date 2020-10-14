@@ -1,6 +1,6 @@
 import React from 'react';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {TouchableOpacity, Image} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 
 import {
   Header,

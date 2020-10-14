@@ -39,7 +39,12 @@ export const Background = styled.ImageBackground.attrs({
 export const Center = styled.View`
   flex: 1;
   align-items: center;
-  margin-left: -60px;
+  ${props =>
+    props.titleHeader
+      ? css`
+          margin-left: -60px;
+        `
+      : null}
 `;
 
 export const ContainerVertical = styled.View`
