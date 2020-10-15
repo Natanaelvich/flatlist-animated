@@ -4,3 +4,7 @@ export const colors = {
   azulEscuro: '#012A3E',
   azulMaisEscuro: '#011724',
 };
+
+export const token = 'hAu3tRujB02FNeer5xSrKQ==';
+
+export const contantes = {RESPONSELOGIN: ''};
