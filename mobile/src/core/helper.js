@@ -7,4 +7,4 @@ export const colors = {
 
 export const token = 'hAu3tRujB02FNeer5xSrKQ==';
 
-export const contantes = {RESPONSELOGIN: ''};
+export const contantes = {RESPONSELOGIN: 'response@login'};
