@@ -14,7 +14,7 @@ function Login({navigation}) {
   useEffect(() => {
     setLogin('');
     setSenha('');
-  });
+  }, []);
 
   async function handleLogin() {
     const url = `login.php?v_login=${login}&v_senha=${senha}&v_token=${token}`;
@@ -37,7 +37,11 @@ function Login({navigation}) {
         <Label color={colors.laranja}>LOGIN</Label>
         <Input onChangeText={text => setLogin(text)} value={login} />
         <Label color={colors.azul}>SENHA</Label>
-        <Input onChangeText={text => setSenha(text)} value={senha} />
+        <Input
+          onChangeText={text => setSenha(text)}
+          value={senha}
+          onSubmitEditing={() => handleLogin()}
+        />
 
         <Botao onPress={() => handleLogin()}>
           <TextoBotao>ENTRAR</TextoBotao>
