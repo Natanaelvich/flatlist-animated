@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {TouchableOpacity, View, StyleSheet} from 'react-native';
+import {TouchableOpacity, FlatList} from 'react-native';
 
 import {
   Header,
@@ -8,7 +8,6 @@ import {
   ContainerPrincipal,
   Background,
   Center,
-  ContainerVertical,
   Card,
   Text,
   CircleIconBorder,
@@ -17,6 +16,11 @@ import {
 import {colors} from '../../core/helper';
 
 function MotivoParada({navigation}) {
+  const [motivos, setMotivos] = useState([
+    'parada programada',
+    'solicitação agente',
+  ]);
+
   return (
     <>
       <Header>
@@ -45,6 +49,19 @@ function MotivoParada({navigation}) {
             />
             <Text fontSize={30}>Veículo: BR1234</Text>
           </Center>
+          <FlatList
+            keyExtractor={item => item}
+            data={motivos}
+            numColumns={2}
+            horizontal={false}
+            renderItem={({item}) => (
+              <Card>
+                <Text style={{color: colors.azulEscuro}} title fontSize={22}>
+                  {item.toUpperCase()}
+                </Text>
+              </Card>
+            )}
+          />
         </Background>
       </ContainerPrincipal>
     </>

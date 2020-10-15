@@ -59,29 +59,21 @@ export const Center = styled.View`
         `}
 `;
 
-export const ContainerVertical = styled.View`
-  flex-direction: column;
-  padding-left: 20px;
-  justify-content: center;
-`;
-
 export const ContainerHorizontal = styled.View`
   flex-direction: row;
   align-items: center;
 `;
 
 export const Card = styled.View`
-  background-color: #fff;
-  /*border-width: 1px;
-  border-style: solid;*/
-  flex: 1;
-  flex-direction: row;
-  width: 90%;
-  max-height: 120px;
-  margin-top: 20px;
-  border-radius: 5px;
   align-items: center;
-  padding-horizontal: 25px;
+  justify-content: center;
+  background-color: #fff;
+  height: 100px;
+  width: 300;
+  margin-top: 20px;
+  border-radius: 10px;
+  padding: 40px;
+  margin-horizontal: 10px;
 `;
 
 export const Text = styled.Text`
@@ -99,6 +91,7 @@ export const Text = styled.Text`
     props.title
       ? css`
           font-weight: bold;
+          text-align: center;
         `
       : css`
           font-weight: normal;
