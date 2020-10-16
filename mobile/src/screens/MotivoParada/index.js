@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
+import {TouchableOpacity, FlatList, Alert} from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {TouchableOpacity, FlatList} from 'react-native';
 
 import {
   Header,
@@ -13,7 +13,7 @@ import {
   CircleIconBorder,
   CircleIconTemp,
 } from './styles';
-import {colors} from '../../core/helper';
+import {colors, reportJornada} from '../../core/helper';
 
 function MotivoParada({navigation}) {
   const [motivos, setMotivos] = useState([
@@ -55,11 +55,13 @@ function MotivoParada({navigation}) {
             numColumns={2}
             horizontal={false}
             renderItem={({item}) => (
-              <Card>
-                <Text style={{color: colors.azulEscuro}} title fontSize={22}>
-                  {item.toUpperCase()}
-                </Text>
-              </Card>
+              <TouchableOpacity onPress={() => reportJornada(item, item)}>
+                <Card>
+                  <Text style={{color: colors.azulEscuro}} title fontSize={22}>
+                    {item.toUpperCase()}
+                  </Text>
+                </Card>
+              </TouchableOpacity>
             )}
           />
         </Background>

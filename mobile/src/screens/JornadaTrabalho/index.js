@@ -1,7 +1,10 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import Logo from '../../components/logo';
+
+import {reportJornada} from '../../core/helper';
 
 import {
   ContainerJornada,
@@ -63,13 +66,13 @@ function JornadaTrabalho({navigation}) {
               <Text fontSize={22}>Veículo: </Text>
             </ContainerHorizontal>
             <Text fontSize={60}>JORNADA DE TRABALHO</Text>
-            <Botao principal>
+            <Botao principal onPress={() => reportJornada()}>
               <TextoBotao principal>INICIAR</TextoBotao>
             </Botao>
             <Botao onPress={() => navigation.push('MotivoParada')}>
               <TextoBotao>PARADA/MOTIVO</TextoBotao>
             </Botao>
-            <Botao>
+            <Botao onPress={() => reportJornada()}>
               <TextoBotao>FIM</TextoBotao>
             </Botao>
           </Center>

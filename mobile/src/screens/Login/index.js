@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
+import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import {Container, Botao, TextoBotao, Input, Label} from './styles';
-import {colors, token, contantes} from '../../core/helper';
+import {colors, token, contantes, conectado} from '../../core/helper';
 import api from '../../services/api';
 
 import Logo from '../../components/logo';
@@ -14,9 +15,23 @@ function Login({navigation}) {
   useEffect(() => {
     setLogin('');
     setSenha('');
+
+    veirificarInternet();
   }, []);
 
+  const veirificarInternet = async () => {
+    const conectadoTest = await conectado();
+
+    if (!conectadoTest) {
+      Alert.alert('Aviso', 'Sem conexão com internet!', [
+        {text: 'Ok', onPress: () => {}},
+      ]);
+    }
+  };
+
   async function handleLogin() {
+    veirificarInternet();
+
     const url = `login.php?v_login=${login}&v_senha=${senha}&v_token=${token}`;
 
     const response = await api.post(url);
