@@ -14,6 +14,8 @@ export const colors = {
 export const token = '41db1141fd558a11ad2d1995831a9f8a';
 
 export const contantes = {
+  idUser: 'ID',
+  hash: 'HASH',
   RESPONSELOGIN: 'response@login',
   LISTAREQUEST: 'lista@requests',
 };

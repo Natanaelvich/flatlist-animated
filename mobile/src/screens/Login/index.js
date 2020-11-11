@@ -30,28 +30,36 @@ function Login({navigation}) {
   };
 
   async function handleLogin() {
-    veirificarInternet();
+    try {
+      veirificarInternet();
 
-    const url = `login_jornada.php`;
+      const url = `login_jornada.php`;
 
-    const form = new FormData();
+      const form = new FormData();
 
-    form.append('v_login', login);
-    form.append('v_senha', senha);
-    form.append('token', token);
+      form.append('v_login', login);
+      form.append('v_senha', senha);
+      form.append('token', token);
 
-    console.log('body ', form);
+      console.log('body ', form);
 
-    const response = await api.post(url, form, {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    });
+      const response = await api.post(url, form, {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      });
 
-    if (response.status == 200) {
-      await AsyncStorage.setItem(
-        contantes.RESPONSELOGIN,
-        JSON.stringify(response.data),
-      );
-      navigation.navigate('JornadaTrabalho');
+      if (response.status == 200) {
+        await AsyncStorage.setItem(
+          contantes.RESPONSELOGIN,
+          JSON.stringify(response.data),
+        );
+        navigation.navigate('JornadaTrabalho');
+      }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.errormsg) {
+          Alert.alert('Erro', error.response.errormsg);
+        }
+      }
     }
   }
 
