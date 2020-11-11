@@ -11,7 +11,7 @@ export const colors = {
   azulMaisEscuro: '#011724',
 };
 
-export const token = 'hAu3tRujB02FNeer5xSrKQ==';
+export const token = '41db1141fd558a11ad2d1995831a9f8a';
 
 export const contantes = {
   RESPONSELOGIN: 'response@login',

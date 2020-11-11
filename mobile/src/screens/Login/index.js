@@ -32,9 +32,19 @@ function Login({navigation}) {
   async function handleLogin() {
     veirificarInternet();
 
-    const url = `login.php?v_login=${login}&v_senha=${senha}&v_token=${token}`;
+    const url = `login_jornada.php`;
 
-    const response = await api.post(url);
+    const form = new FormData();
+
+    form.append('v_login', login);
+    form.append('v_senha', senha);
+    form.append('token', token);
+
+    console.log('body ', form);
+
+    const response = await api.post(url, form, {
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    });
 
     if (response.status == 200) {
       await AsyncStorage.setItem(
