@@ -47,13 +47,16 @@ function Login({navigation}) {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       });
 
-      if (response.status == 200) {
-        await AsyncStorage.setItem(
-          contantes.RESPONSELOGIN,
-          JSON.stringify(response.data),
-        );
-        navigation.navigate('JornadaTrabalho');
-      }
+      console.log('res ', response.data);
+
+      await AsyncStorage.setItem(contantes.hash, response.data[0].hash);
+
+      await AsyncStorage.setItem(
+        contantes.RESPONSELOGIN,
+        JSON.stringify(response.data[0]),
+      );
+
+      navigation.push('JornadaTrabalho');
     } catch (error) {
       if (error.response) {
         if (error.response.errormsg) {
@@ -74,6 +77,7 @@ function Login({navigation}) {
           onChangeText={text => setSenha(text)}
           value={senha}
           onSubmitEditing={() => handleLogin()}
+          secureTextEntry
         />
 
         <Botao onPress={() => handleLogin()}>
