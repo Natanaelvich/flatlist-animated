@@ -16,18 +16,8 @@ function Login({navigation}) {
     setLogin('');
     setSenha('');
 
-    veirificarInternet();
+    verificarSessao();
   }, []);
-
-  const veirificarInternet = async () => {
-    const conectadoTest = await conectado();
-
-    if (!conectadoTest) {
-      Alert.alert('Aviso', 'Sem conexão com internet!', [
-        {text: 'Ok', onPress: () => {}},
-      ]);
-    }
-  };
 
   async function handleLogin() {
     try {
@@ -50,6 +40,11 @@ function Login({navigation}) {
       console.log('res ', response.data);
 
       await AsyncStorage.setItem(contantes.hash, response.data[0].hash);
+      await AsyncStorage.setItem(contantes.idUser, response.data[0].id_user);
+      await AsyncStorage.setItem(
+        contantes.idCliente,
+        response.data[0].id_ciente,
+      );
 
       await AsyncStorage.setItem(
         contantes.RESPONSELOGIN,
@@ -63,6 +58,17 @@ function Login({navigation}) {
           Alert.alert('Erro', error.response.errormsg);
         }
       }
+    }
+  }
+
+  async function verificarSessao() {
+    const responseString = await AsyncStorage.getItem(contantes.RESPONSELOGIN);
+
+    const response = JSON.parse(responseString);
+
+    if (response.hash) {
+      //Alert.alert('Login', 'Deseja voltar para sessão anterior ou logar novamente?')
+      navigation.push('JornadaTrabalho');
     }
   }
 

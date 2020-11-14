@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {TouchableOpacity, FlatList, Alert} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
@@ -13,13 +14,45 @@ import {
   CircleIconBorder,
   CircleIconTemp,
 } from './styles';
-import {colors, reportJornada} from '../../core/helper';
+import {colors, reportJornada, contantes} from '../../core/helper';
+import api from '../../services/api';
 
 function MotivoParada({navigation}) {
-  const [motivos, setMotivos] = useState([
-    'parada programada',
-    'solicitação agente',
-  ]);
+  useEffect(() => {
+    pegarMacros();
+  }, []);
+
+  const [motivos, setMotivos] = useState([]);
+
+  async function pegarMacros() {
+    const url = 'get_jornada.php';
+
+    const form = new FormData();
+
+    const hash = await AsyncStorage.getItem(contantes.hash);
+    const idUser = await AsyncStorage.getItem(contantes.idUser);
+    const idCliente = await AsyncStorage.getItem(contantes.idCliente);
+
+    form.append('hash', hash);
+    form.append('token', token);
+    form.append('id_user', idUser);
+    form.append('id_cliente', idCliente);
+
+    const response = await api.post(url, form);
+
+    if (response.data[0].macros) {
+      setMotivos(response.data[0].macros);
+    } else {
+      Alert.alert('Erro', 'Houve um erro ao pegar as macros', [
+        {
+          text: 'Logar',
+          onPress: () => {
+            navigation.push('Login');
+          },
+        },
+      ]);
+    }
+  }
 
   return (
     <>
@@ -58,7 +91,7 @@ function MotivoParada({navigation}) {
               <TouchableOpacity onPress={() => reportJornada(item, item)}>
                 <Card>
                   <Text style={{color: colors.azulEscuro}} title fontSize={22}>
-                    {item.toUpperCase()}
+                    {item.nome_macro.toUpperCase()}
                   </Text>
                 </Card>
               </TouchableOpacity>

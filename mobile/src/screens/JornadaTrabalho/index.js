@@ -1,10 +1,11 @@
-import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import React, {useEffect} from 'react';
+import {TouchableOpacity, Alert} from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
+import AsyncStorage from '@react-native-community/async-storage';
 
+import {contantes, token, conectado} from '../../core/helper';
 import Logo from '../../components/logo';
-
-import {reportJornada} from '../../core/helper';
+import api from '../../services/api';
 
 import {
   ContainerJornada,
@@ -21,8 +22,88 @@ import {
 } from './styles';
 
 function JornadaTrabalho({navigation}) {
+  useEffect(() => {
+    testarIntert();
+  }, []);
+
+  async function testarIntert() {
+    const teste = await conectado();
+
+    if (teste) {
+      testarMacrosInternet();
+    } else {
+      testarMacrosSemInternet();
+    }
+  }
+
+  async function testarMacrosSemInternet() {}
+
+  async function testarMacrosInternet() {
+    const url = 'get_jornada.php';
+
+    const form = new FormData();
+
+    const hash = await AsyncStorage.getItem(contantes.hash);
+    const idUser = await AsyncStorage.getItem(contantes.idUser);
+    const idCliente = await AsyncStorage.getItem(contantes.idCliente);
+
+    form.append('hash', hash);
+    form.append('token', token);
+    form.append('id_user', idUser);
+    form.append('id_cliente', idCliente);
+
+    const response = await api.post(url, form);
+
+    if (!response.data[0].macros) {
+      Alert.alert('Erro', 'Houve um erro ao pegar as macros', [
+        {
+          text: 'Logar',
+          onPress: () => {
+            navigation.push('Login');
+          },
+        },
+      ]);
+    }
+  }
+
   function irDetalhes() {
     navigation.push('Detalhes');
+  }
+
+  // esperando novo endpoint
+  async function reportJornada(id = '', motivo = '') {
+    console.log('fim');
+    /*const body = {
+      memoria: 'S',
+      data_envio: '2020-10-14 08:05:22',
+      pessoaid: '0000000003',
+      pessoanome: 'ELIAS VAZ',
+      data_macro: '2020-10-14 08:06:29',
+      veiculo: 'ETN5710',
+      0: {
+        nome_macro: 'Descanso',
+        data_macro_atual: '2020-10-14 08:06:29',
+        nome_macro_anterior: 'Inicio Jornada',
+        data_macro_anterior: '2020-10-14 07:06:29',
+      },
+    };
+
+    if (conectado()) {
+      const response = await api.get('/report_jornada.php', body);
+
+      console.log('res ', response.data);
+    } else {
+      Alert.alert('Aviso Sem Conexão', 'Requisição será salva no dispositivo', [
+        {text: 'Ok', onPress: () => {}},
+      ]);
+
+      const listaString = await AsyncStorage.getItem(contantes.LISTAREQUEST);
+      const lista = JSON.parse(listaString);
+
+      lista.push(body);
+
+      await AsyncStorage.setItem(contantes.LISTAREQUEST, JSON.stringify(lista));
+    }*/
   }
 
   return (

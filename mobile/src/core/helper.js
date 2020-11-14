@@ -1,5 +1,4 @@
 import NetInfo from '@react-native-community/netinfo';
-import AsyncStorage from '@react-native-community/async-storage';
 import {Alert} from 'react-native';
 
 import api from '../services/api';
@@ -15,6 +14,7 @@ export const token = '41db1141fd558a11ad2d1995831a9f8a';
 
 export const contantes = {
   idUser: 'ID',
+  idCliente: 'IDCLIENTE',
   hash: 'HASH',
   RESPONSELOGIN: 'response@login',
   LISTAREQUEST: 'lista@requests',
@@ -23,7 +23,18 @@ export const contantes = {
 export const conectado = async () => {
   const response = await NetInfo.fetch();
 
+  // true ou false
   return response.isConnected;
+};
+
+export const veirificarInternet = async () => {
+  const conectadoTest = await conectado();
+
+  if (!conectadoTest) {
+    Alert.alert('Aviso', 'Sem conexão com internet!', [
+      {text: 'Ok', onPress: () => {}},
+    ]);
+  }
 };
 
 /*
@@ -33,37 +44,3 @@ export const conectado = async () => {
   return state.isConnected;
 });
 */
-
-export async function reportJornada(id = '', motivo = '') {
-  const body = {
-    memoria: 'S',
-    data_envio: '2020-10-14 08:05:22',
-    pessoaid: '0000000003',
-    pessoanome: 'ELIAS VAZ',
-    data_macro: '2020-10-14 08:06:29',
-    veiculo: 'ETN5710',
-    0: {
-      nome_macro: 'Descanso',
-      data_macro_atual: '2020-10-14 08:06:29',
-      nome_macro_anterior: 'Inicio Jornada',
-      data_macro_anterior: '2020-10-14 07:06:29',
-    },
-  };
-
-  if (conectado()) {
-    const response = await api.get('/report_jornada.php', body);
-
-    console.log('res ', response.data);
-  } else {
-    Alert.alert('Aviso Sem Conexão', 'Requisição será salva no dispositivo', [
-      {text: 'Ok', onPress: () => {}},
-    ]);
-
-    const listaString = await AsyncStorage.getItem(contantes.LISTAREQUEST);
-    const lista = JSON.parse(listaString);
-
-    lista.push(body);
-
-    await AsyncStorage.setItem(contantes.LISTAREQUEST, JSON.stringify(lista));
-  }
-}

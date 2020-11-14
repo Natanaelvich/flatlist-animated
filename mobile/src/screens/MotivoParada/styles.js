@@ -69,7 +69,7 @@ export const Card = styled.View`
   justify-content: center;
   background-color: #fff;
   height: 100px;
-  width: 300;
+  width: 300px;
   margin-top: 20px;
   border-radius: 10px;
   padding: 40px;
