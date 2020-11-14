@@ -62,11 +62,9 @@ function Login({navigation}) {
   }
 
   async function verificarSessao() {
-    const responseString = await AsyncStorage.getItem(contantes.RESPONSELOGIN);
+    const hash = await AsyncStorage.getItem(contantes.hash);
 
-    const response = JSON.parse(responseString);
-
-    if (response.hash) {
+    if (hash) {
       //Alert.alert('Login', 'Deseja voltar para sessão anterior ou logar novamente?')
       navigation.push('JornadaTrabalho');
     }

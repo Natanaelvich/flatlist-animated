@@ -14,15 +14,19 @@ import {
   CircleIconBorder,
   CircleIconTemp,
 } from './styles';
-import {colors, reportJornada, contantes} from '../../core/helper';
+import {colors, contantes} from '../../core/helper';
+import {localization} from '../../core/location';
 import api from '../../services/api';
 
 function MotivoParada({navigation}) {
   useEffect(() => {
     pegarMacros();
+    pegarLocal();
   }, []);
 
   const [motivos, setMotivos] = useState([]);
+  //coord: {lat: coords.latitude, long: coords.longitude},
+  const [geolocation, setGeolocation] = useState({});
 
   async function pegarMacros() {
     const url = 'get_jornada.php';
@@ -51,6 +55,61 @@ function MotivoParada({navigation}) {
           },
         },
       ]);
+    }
+  }
+
+  function pegarLocal() {
+    localization()
+      .then(result => {
+        console.log('coords encontradas', result);
+        setGeolocation(result);
+      })
+      .catch(err => {
+        console.log('erro locate~> ', err);
+        Alert.alert('Erro GPS', 'Erro na localização');
+      })
+      .finally(async () => {
+        const coordString = await AsyncStorage.getItem('geopositionSave');
+        const coords = JSON.parse(coordString);
+        if (coords) {
+          Alert.alert('Informação', 'Localização encontrada');
+          setGeolocation(coords);
+        }
+      });
+  }
+
+  async function reportJornada(idMacro = '', descricaoMacro = '') {
+    try {
+      const url = 'envio_jornada.php';
+
+      const form = new FormData();
+
+      const hash = await AsyncStorage.getItem(contantes.hash);
+      const idUser = await AsyncStorage.getItem(contantes.idUser);
+      const idCliente = await AsyncStorage.getItem(contantes.idCliente);
+
+      const dataTest = new Date();
+
+      form.append('hash', hash);
+      form.append('token', token);
+      form.append('id_user', idUser);
+      form.append('id_cliente', idCliente);
+      form.append('id_macro', idMacro);
+      form.append('descricao_macro', descricaoMacro);
+      form.append('v_data', dataTest);
+      // vai depender do tipo da macro
+      form.append('data_ini', dataTest);
+      form.append('data_fim', dataTest);
+      form.append('tempo', dataTest.getHours());
+
+      if (geolocation.coords) {
+        form.append('lat', `${geolocation.coords.latitude}`);
+        form.append('long', `${geolocation.coords.longitude}`);
+      }
+
+      const response = await api.post(url, form);
+    } catch (error) {
+      console.log('err ', err);
     }
   }
 
@@ -88,7 +147,8 @@ function MotivoParada({navigation}) {
             numColumns={2}
             horizontal={false}
             renderItem={({item}) => (
-              <TouchableOpacity onPress={() => reportJornada(item, item)}>
+              <TouchableOpacity
+                onPress={() => reportJornada(item.idMacro, item.nome_macro)}>
                 <Card>
                   <Text style={{color: colors.azulEscuro}} title fontSize={22}>
                     {item.nome_macro.toUpperCase()}

@@ -36,7 +36,14 @@ function JornadaTrabalho({navigation}) {
     }
   }
 
-  async function testarMacrosSemInternet() {}
+  async function testarMacrosSemInternet() {
+    const responseString = await AsyncStorage.getItem(contantes.RESPONSELOGIN);
+
+    const response = JSON.parse(responseString);
+
+    // depois que atualizar na api de entregas para macros
+    erroSessao(response.macros);
+  }
 
   async function testarMacrosInternet() {
     const url = 'get_jornada.php';
@@ -54,7 +61,11 @@ function JornadaTrabalho({navigation}) {
 
     const response = await api.post(url, form);
 
-    if (!response.data[0].macros) {
+    erroSessao(response.data[0].macros);
+  }
+
+  const erroSessao = macros => {
+    if (!macros) {
       Alert.alert('Erro', 'Houve um erro ao pegar as macros', [
         {
           text: 'Logar',
@@ -64,7 +75,7 @@ function JornadaTrabalho({navigation}) {
         },
       ]);
     }
-  }
+  };
 
   function irDetalhes() {
     navigation.push('Detalhes');
