@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import {contantes} from './core/helper';
+import {constante} from './core/helper';
 import api from './services/api';
 
 import Login from './screens/Login';
@@ -19,10 +19,10 @@ const Routes = () => {
   });
 
   async function listaReq() {
-    const listaString = await AsyncStorage.getItem(contantes.LISTAREQUEST);
+    const listaString = await AsyncStorage.getItem(constante.LISTAREQUEST);
 
     if (!listaString) {
-      await AsyncStorage.setItem(contantes.LISTAREQUEST, JSON.stringify([]));
+      await AsyncStorage.setItem(constante.LISTAREQUEST, JSON.stringify([]));
     } else {
       const lista = JSON.parse(listaString);
 

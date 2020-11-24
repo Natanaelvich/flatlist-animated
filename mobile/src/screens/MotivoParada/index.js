@@ -14,7 +14,7 @@ import {
   CircleIconBorder,
   CircleIconTemp,
 } from './styles';
-import {colors, contantes} from '../../core/helper';
+import {colors, constante} from '../../core/helper';
 import {localization} from '../../core/location';
 import api from '../../services/api';
 
@@ -33,9 +33,9 @@ function MotivoParada({navigation}) {
 
     const form = new FormData();
 
-    const hash = await AsyncStorage.getItem(contantes.hash);
-    const idUser = await AsyncStorage.getItem(contantes.idUser);
-    const idCliente = await AsyncStorage.getItem(contantes.idCliente);
+    const hash = await AsyncStorage.getItem(constante.hash);
+    const idUser = await AsyncStorage.getItem(constante.idUser);
+    const idCliente = await AsyncStorage.getItem(constante.idCliente);
 
     form.append('hash', hash);
     form.append('token', token);
@@ -84,9 +84,9 @@ function MotivoParada({navigation}) {
 
       const form = new FormData();
 
-      const hash = await AsyncStorage.getItem(contantes.hash);
-      const idUser = await AsyncStorage.getItem(contantes.idUser);
-      const idCliente = await AsyncStorage.getItem(contantes.idCliente);
+      const hash = await AsyncStorage.getItem(constante.hash);
+      const idUser = await AsyncStorage.getItem(constante.idUser);
+      const idCliente = await AsyncStorage.getItem(constante.idCliente);
 
       const dataTest = new Date();
 

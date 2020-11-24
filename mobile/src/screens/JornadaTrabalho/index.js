@@ -3,7 +3,7 @@ import {TouchableOpacity, Alert} from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import {contantes, token, conectado} from '../../core/helper';
+import {constante, token, conectado} from '../../core/helper';
 import Logo from '../../components/logo';
 import api from '../../services/api';
 
@@ -37,12 +37,10 @@ function JornadaTrabalho({navigation}) {
   }
 
   async function testarMacrosSemInternet() {
-    const responseString = await AsyncStorage.getItem(contantes.RESPONSELOGIN);
+    const macrosString = await AsyncStorage.getItem(constante.macros);
+    const macros = JSON.parse(macrosString);
 
-    const response = JSON.parse(responseString);
-
-    // depois que atualizar na api de entregas para macros
-    erroSessao(response.macros);
+    erroSessao(macros);
   }
 
   async function testarMacrosInternet() {
@@ -50,9 +48,9 @@ function JornadaTrabalho({navigation}) {
 
     const form = new FormData();
 
-    const hash = await AsyncStorage.getItem(contantes.hash);
-    const idUser = await AsyncStorage.getItem(contantes.idUser);
-    const idCliente = await AsyncStorage.getItem(contantes.idCliente);
+    const hash = await AsyncStorage.getItem(constante.hash);
+    const idUser = await AsyncStorage.getItem(constante.idUser);
+    const idCliente = await AsyncStorage.getItem(constante.idCliente);
 
     form.append('hash', hash);
     form.append('token', token);
@@ -81,40 +79,41 @@ function JornadaTrabalho({navigation}) {
     navigation.push('Detalhes');
   }
 
-  // esperando novo endpoint
-  async function reportJornada(id = '', motivo = '') {
-    console.log('fim');
-    /*const body = {
-      memoria: 'S',
-      data_envio: '2020-10-14 08:05:22',
-      pessoaid: '0000000003',
-      pessoanome: 'ELIAS VAZ',
-      data_macro: '2020-10-14 08:06:29',
-      veiculo: 'ETN5710',
-      0: {
-        nome_macro: 'Descanso',
-        data_macro_atual: '2020-10-14 08:06:29',
-        nome_macro_anterior: 'Inicio Jornada',
-        data_macro_anterior: '2020-10-14 07:06:29',
-      },
-    };
+  async function reportJornada(idMacro = '', descricaoMacro = '') {
+    try {
+      const url = 'envio_jornada.php';
 
-    if (conectado()) {
-      const response = await api.get('/report_jornada.php', body);
+      const form = new FormData();
 
-      console.log('res ', response.data);
-    } else {
-      Alert.alert('Aviso Sem Conexão', 'Requisição será salva no dispositivo', [
-        {text: 'Ok', onPress: () => {}},
-      ]);
+      const hash = await AsyncStorage.getItem(constante.hash);
+      const idUser = await AsyncStorage.getItem(constante.idUser);
+      const idCliente = await AsyncStorage.getItem(constante.idCliente);
 
-      const listaString = await AsyncStorage.getItem(contantes.LISTAREQUEST);
-      const lista = JSON.parse(listaString);
+      const dataTest = new Date();
 
-      lista.push(body);
+      form.append('hash', hash);
+      form.append('token', token);
+      form.append('id_user', idUser);
+      form.append('id_cliente', idCliente);
+      form.append('id_macro', idMacro);
+      form.append('descricao_macro', descricaoMacro);
+      form.append('v_data', dataTest);
+      // vai depender do tipo da macro
+      form.append('data_ini', dataTest);
 
-      await AsyncStorage.setItem(contantes.LISTAREQUEST, JSON.stringify(lista));
-    }*/
+      // pode ser o valor da ultima jornada
+      form.append('data_fim', dataTest);
+      form.append('tempo', dataTest.getHours());
+
+      if (geolocation.coords) {
+        form.append('lat', `${geolocation.coords.latitude}`);
+        form.append('long', `${geolocation.coords.longitude}`);
+      }
+
+      const response = await api.post(url, form);
+    } catch (error) {
+      console.log('err ', err);
+    }
   }
 
   return (
@@ -158,13 +157,15 @@ function JornadaTrabalho({navigation}) {
               <Text fontSize={22}>Veículo: </Text>
             </ContainerHorizontal>
             <Text fontSize={60}>JORNADA DE TRABALHO</Text>
-            <Botao principal onPress={() => reportJornada()}>
+            <Botao
+              principal
+              onPress={() => reportJornada('9', 'Inicio de Jornada')}>
               <TextoBotao principal>INICIAR</TextoBotao>
             </Botao>
             <Botao onPress={() => navigation.push('MotivoParada')}>
               <TextoBotao>PARADA/MOTIVO</TextoBotao>
             </Botao>
-            <Botao onPress={() => reportJornada()}>
+            <Botao onPress={() => reportJornada('10', 'Fim de Jornada')}>
               <TextoBotao>FIM</TextoBotao>
             </Botao>
           </Center>

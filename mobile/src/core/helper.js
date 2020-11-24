@@ -12,12 +12,31 @@ export const colors = {
 
 export const token = '41db1141fd558a11ad2d1995831a9f8a';
 
-export const contantes = {
+export const constante = {
   idUser: 'ID',
   idCliente: 'IDCLIENTE',
   hash: 'HASH',
-  RESPONSELOGIN: 'response@login',
   LISTAREQUEST: 'lista@requests',
+  ULTIMAJORNADA: 'jornada@ultima',
+  macros: 'macros',
+  motorista: 'motorista',
+  datas: 'datas',
+};
+
+// motorista = {id:'',nome:''}
+// datas = {inicio:'',fim:''}
+
+export const pegarOrientation = (
+  Dimensions,
+  setOrientation = (value = '') => {},
+) => {
+  if (Dimensions.get('window').width < Dimensions.get('window').height) {
+    console.log('portrait');
+    setOrientation('portrait');
+  } else {
+    console.log('landscape');
+    setOrientation('landscape');
+  }
 };
 
 export const conectado = async () => {
