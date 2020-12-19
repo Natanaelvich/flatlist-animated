@@ -13,6 +13,7 @@ import {
   Card,
   Text,
   CircleIcon,
+  Hide,
 } from './styles';
 import { colors, constante } from '../../core/helper';
 
@@ -66,6 +67,7 @@ function Detalhes() {
         <Center>
           <MaterialCommunityIcons name="steering" size={61} color="#fff" />
         </Center>
+        <Hide />
       </Header>
       <ContainerPrincipal>
         <Background>

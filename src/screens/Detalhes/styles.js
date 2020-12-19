@@ -7,6 +7,7 @@ import fundo from '../../assets/fundo-azul.jpg';
 export const Header = styled.SafeAreaView`
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   padding: 30px 30px 10px;
   background-color: ${colors.azulEscuro};
 `;
@@ -34,7 +35,6 @@ export const Background = styled.ImageBackground.attrs({
 export const Center = styled.View`
   flex: 1;
   align-items: center;
-  margin-left: -60px;
 `;
 
 export const ContainerVertical = styled.View`
@@ -91,4 +91,9 @@ export const CircleIcon = styled.View`
   height: 41px;
   align-items: center;
   justify-content: center;
+`;
+
+export const Hide = styled.View`
+  width: 41px;
+  height: 41px;
 `;

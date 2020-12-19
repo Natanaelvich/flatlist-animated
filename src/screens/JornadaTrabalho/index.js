@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { Alert, View } from 'react-native';
+import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 

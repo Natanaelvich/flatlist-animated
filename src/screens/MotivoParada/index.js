@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { TouchableOpacity, FlatList, Alert } from 'react-native';
+import { View, TouchableOpacity, FlatList, Alert } from 'react-native';
+import { useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
+
 import {
   Header,
   SubHeader,
@@ -15,14 +18,12 @@ import {
   CircleIconTemp,
 } from './styles';
 import { colors, constante, token } from '../../core/helper';
-import { localization } from '../../core/location';
 import api from '../../services/api';
 
 function MotivoParada() {
   const navigation = useNavigation();
   const [motivos, setMotivos] = useState([]);
-  // coord: {lat: coords.latitude, long: coords.longitude},
-  const [geolocation, setGeolocation] = useState({});
+  const { location } = useSelector(state => state.utils);
 
   const pegarMacros = useCallback(async () => {
     const url = 'get_jornada.php';
@@ -54,27 +55,8 @@ function MotivoParada() {
     }
   }, [navigation]);
 
-  function pegarLocal() {
-    localization()
-      .then(result => {
-        setGeolocation(result);
-      })
-      .catch(err => {
-        Alert.alert('Erro GPS', 'Erro na localização');
-      })
-      .finally(async () => {
-        const coordString = await AsyncStorage.getItem('geopositionSave');
-        const coords = JSON.parse(coordString);
-        if (coords) {
-          Alert.alert('Informação', 'Localização encontrada');
-          setGeolocation(coords);
-        }
-      });
-  }
-
   useEffect(() => {
     pegarMacros();
-    pegarLocal();
   }, [pegarMacros]);
 
   async function reportJornada(idMacro = '', descricaoMacro = '') {
@@ -101,12 +83,12 @@ function MotivoParada() {
       form.append('data_fim', dataTest);
       form.append('tempo', dataTest.getHours());
 
-      if (geolocation.coords) {
-        form.append('lat', `${geolocation.coords.latitude}`);
-        form.append('long', `${geolocation.coords.longitude}`);
+      if (location) {
+        form.append('lat', `${location.latitude}`);
+        form.append('long', `${location.longitude}`);
       }
 
-      const response = await api.post(url, form);
+      await api.post(url, form);
     } catch (error) {
       console.log('err ', error);
     }
@@ -114,6 +96,8 @@ function MotivoParada() {
 
   return (
     <>
+      <StatusBar backgroundColor={colors.azulEscuro} style="light" />
+      <View style={{ marginTop: 20 }} />
       <Header>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <CircleIconBorder>
@@ -149,7 +133,7 @@ function MotivoParada() {
             <Text fontSize={30}>Veículo: BR1234</Text>
           </Center>
           <FlatList
-            keyExtractor={item => item}
+            keyExtractor={item => item.idMacro}
             data={motivos}
             numColumns={2}
             horizontal={false}
