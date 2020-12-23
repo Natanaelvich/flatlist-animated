@@ -6,14 +6,20 @@ import fundo from '../../assets/fundo-azul.jpg';
 
 export const ContainerStatus = styled.View`
   flex-direction: row;
-  padding: 10px 30px;
   background-color: ${colors.azulEscuro};
   align-items: center;
-  justify-content: space-between;
+  padding: 12px;
 `;
 
 export const ContainerJornada = styled.ScrollView`
+  flex: 1;
   background-color: ${colors.azul};
+  background-color: #999;
+`;
+export const ContentJornada = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Background = styled.ImageBackground.attrs({
@@ -23,22 +29,20 @@ export const Background = styled.ImageBackground.attrs({
   },
 })`
   flex: 1;
-  align-items: center;
-  justify-content: center;
 `;
 
 export const ContainerLeft = styled.View`
   flex-direction: column;
-  flex: 1;
   justify-content: center;
   align-items: center;
+  flex: 1;
 `;
 
 export const ContainerRight = styled.TouchableOpacity`
   flex-direction: row;
-  flex: 1;
   justify-content: center;
   align-items: center;
+  flex: 1;
 `;
 
 export const ContainerVertical = styled.View`

@@ -1,9 +1,27 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Alert } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  Image,
+  LayoutAnimation,
+  Platform,
+  UIManager,
+} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import { useNavigation } from '@react-navigation/native';
-import { Container, Botao, TextoBotao, Input, Label } from './styles';
+import { BorderlessButton } from 'react-native-gesture-handler';
+import { MaterialIcons } from '@expo/vector-icons';
+import {
+  Container,
+  Botao,
+  TextoBotao,
+  Input,
+  Label,
+  Form,
+  Opcoes,
+  OpcoesButton,
+} from './styles';
 import {
   colors,
   token,
@@ -12,7 +30,15 @@ import {
 } from '../../core/helper';
 import api from '../../services/api';
 
-import Logo from '../../components/logo';
+import Background from '../../components/Background';
+import logo from '../../assets/logo.png';
+
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 function Login() {
   const navigation = useNavigation();
@@ -20,6 +46,10 @@ function Login() {
 
   const [login, setLogin] = useState('');
   const [senha, setSenha] = useState('');
+  const [placa, setPlaca] = useState(null);
+  const [idVeiculo, setIdVeiculo] = useState(null);
+  const [mostrarOpcoes, setMostrarOpcoes] = useState(false);
+  const [loading, setLoading] = useState(null);
 
   useEffect(() => {
     if (__DEV__) {
@@ -32,7 +62,6 @@ function Login() {
     const hash = await AsyncStorage.getItem(constante.hash);
 
     if (hash) {
-      // Alert.alert('Login', 'Deseja voltar para sessão anterior ou logar novamente?')
       navigation.navigate('JornadaTrabalho');
     }
   }, [navigation]);
@@ -42,11 +71,15 @@ function Login() {
   }, [verificarSessao]);
 
   async function handleLogin() {
-    console.log('teste');
-
     try {
-      console.log('teste 2');
-
+      if ((placa && !idVeiculo) || (!placa && idVeiculo)) {
+        Alert.alert(
+          'Erro de validação',
+          'Para editar as informações do veiculo, todas os campos devem ser preenchidos'
+        );
+        return;
+      }
+      setLoading(true);
       veirificarInternet();
 
       const url = `login_jornada.php`;
@@ -57,14 +90,14 @@ function Login() {
       form.append('v_senha', senha);
       form.append('token', token);
 
-      console.log('body ', form);
-
       const response = await api.post(url, form, {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       });
 
-      console.log('res ', response.data);
-
+      if (placa && idVeiculo) {
+        form.append('placa', placa);
+        form.append('id_veiculo', idVeiculo);
+      }
       const motorista = {
         id: response.data[0].id_motorista,
         nome: response.data[0].motorista,
@@ -92,13 +125,24 @@ function Login() {
           Alert.alert('Erro', error.response.errormsg);
         }
       }
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-    <>
-      <Logo>
-        <Container>
+    <Container
+      contentContainerStyle={{
+        flexGrow: 1,
+      }}
+    >
+      <Background>
+        <Image
+          resizeMode="contain"
+          source={logo}
+          style={{ alignSelf: 'center', height: '20%', marginTop: 20 }}
+        />
+        <Form>
           <Label color={colors.laranja}>LOGIN</Label>
           <Input
             onChangeText={text => setLogin(text)}
@@ -114,12 +158,52 @@ function Login() {
             secureTextEntry
           />
 
+          <OpcoesButton
+            onPress={() => {
+              LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+              setMostrarOpcoes(!mostrarOpcoes);
+            }}
+          >
+            {mostrarOpcoes && (
+              <MaterialIcons
+                name="expand-less"
+                size={45}
+                color={colors.azulEscuro}
+              />
+            )}
+            <Opcoes>Informações do veiculo</Opcoes>
+            {!mostrarOpcoes && (
+              <MaterialIcons
+                name="expand-more"
+                size={45}
+                color={colors.azulEscuro}
+              />
+            )}
+          </OpcoesButton>
+
+          {mostrarOpcoes && (
+            <>
+              <Label color="#333333">PLACA</Label>
+              <Input onChangeText={setPlaca} value={placa} />
+              <Label color="#333333">ID VEICULO</Label>
+              <Input onChangeText={setIdVeiculo} value={idVeiculo} />
+            </>
+          )}
+
           <Botao onPress={() => handleLogin()}>
-            <TextoBotao>ENTRAR</TextoBotao>
+            {loading ? (
+              <ActivityIndicator
+                size="large"
+                color="#fff"
+                animating={loading}
+              />
+            ) : (
+              <TextoBotao>ENTRAR</TextoBotao>
+            )}
           </Botao>
-        </Container>
-      </Logo>
-    </>
+        </Form>
+      </Background>
+    </Container>
   );
 }
 

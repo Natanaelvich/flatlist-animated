@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect } from 'react';
-import { Alert, View } from 'react-native';
+import { Alert, Image, ScrollView, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { constante, token, conectado } from '../../core/helper';
-import Logo from '../../components/logo';
+import Background from '../../components/Background';
 import api from '../../services/api';
+import logo from '../../assets/logo.png';
 
 import {
   ContainerJornada,
@@ -16,10 +17,11 @@ import {
   ContainerRight,
   ContainerHorizontal,
   ContainerVertical,
-  Background,
+  Background as BackgroundLocal,
   Botao,
   TextoBotao,
   Text,
+  ContentJornada,
 } from './styles';
 
 function JornadaTrabalho() {
@@ -105,8 +107,20 @@ function JornadaTrabalho() {
   }
 
   return (
-    <>
-      <Logo />
+    <ScrollView
+      contentContainerStyle={{
+        flexGrow: 1,
+        marginTop: 20,
+      }}
+    >
+      <Background>
+        <Image
+          resizeMode="contain"
+          source={logo}
+          style={{ alignSelf: 'center', height: '80%', marginTop: 20 }}
+        />
+      </Background>
+
       <ContainerStatus>
         <ContainerLeft>
           <Text fontSize={16} title>
@@ -130,17 +144,13 @@ function JornadaTrabalho() {
             <Text fontSize={20} title>
               Status:
             </Text>
-            <Text fontSize={16}>Jornada Não Iniciada</Text>
+            <Text fontSize={16}>Não Iniciada</Text>
           </ContainerVertical>
         </ContainerRight>
       </ContainerStatus>
-      <ContainerJornada
-        contentContainerStyle={{
-          flexGrow: 1,
-          justifyContent: 'center',
-        }}
-      >
-        <Background>
+
+      <BackgroundLocal>
+        <ContentJornada>
           <ContainerHorizontal>
             <MaterialCommunityIcons
               name="steering"
@@ -163,9 +173,9 @@ function JornadaTrabalho() {
           <Botao onPress={() => reportJornada('10', 'Fim de Jornada')}>
             <TextoBotao>FIM</TextoBotao>
           </Botao>
-        </Background>
-      </ContainerJornada>
-    </>
+        </ContentJornada>
+      </BackgroundLocal>
+    </ScrollView>
   );
 }
 
