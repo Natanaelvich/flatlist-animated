@@ -134,6 +134,7 @@ function Login() {
     <Container
       contentContainerStyle={{
         flexGrow: 1,
+        marginTop: 12,
       }}
     >
       <Background>
