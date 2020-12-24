@@ -76,10 +76,10 @@ export const Text = styled.Text`
   ${props =>
     props.title
       ? css`
-          font-weight: bold;
+          font-family: Montserrat_700Bold;
         `
       : css`
-          font-weight: normal;
+          font-family: Montserrat_400Regular;
         `}
 `;
 

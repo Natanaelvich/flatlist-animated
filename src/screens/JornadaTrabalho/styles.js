@@ -56,7 +56,6 @@ export const ContainerHorizontal = styled.View`
 
 export const Text = styled.Text`
   color: #fff;
-  /*font-family: Roboto, sans-serif;*/
   ${props =>
     props.fontSize
       ? css`
@@ -68,10 +67,10 @@ export const Text = styled.Text`
   ${props =>
     props.title
       ? css`
-          font-weight: bold;
+          font-family: Montserrat_700Bold;
         `
       : css`
-          font-weight: normal;
+          font-family: Montserrat_400Regular;
         `}
 `;
 
@@ -102,6 +101,6 @@ export const TextoBotao = styled.Text`
           color: ${colors.azul};
         `};
   text-align: center;
-  font-weight: bold;
+  font-family: Montserrat_700Bold;
   font-size: 21px;
 `;
