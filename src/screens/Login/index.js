@@ -25,7 +25,10 @@ import api from '../../services/api';
 
 import Background from '../../components/Background';
 import logo from '../../assets/logo.png';
-import { signInSuccess } from '../../store/modules/user/actions';
+import {
+  signInSuccess,
+  addInfosVeiculo,
+} from '../../store/modules/user/actions';
 
 if (
   Platform.OS === 'android' &&
@@ -97,6 +100,15 @@ function Login() {
           motorista,
         })
       );
+
+      if (placa && idVeiculo) {
+        dispatch(
+          addInfosVeiculo({
+            placa,
+            idVeiculo,
+          })
+        );
+      }
     } catch (error) {
       if (error.response) {
         if (error.response.errormsg) {

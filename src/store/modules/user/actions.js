@@ -8,6 +8,11 @@ export const signInSuccess = payload => ({
   payload,
 });
 
+export const addInfosVeiculo = payload => ({
+  type: '@user/ADD_INFOS_VEICULO',
+  payload,
+});
+
 export const signOut = () => ({
   type: '@user/SINGN_OUT',
 });

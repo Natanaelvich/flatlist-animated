@@ -27,7 +27,7 @@ import {
 function JornadaTrabalho() {
   const navigation = useNavigation();
   const { location } = useSelector(state => state.utils);
-  const { hash, idUser, idCliente } = useSelector(state => state.user);
+  const { hash, idUser, idCliente, placa } = useSelector(state => state.user);
 
   const erroSessao = useCallback(
     macros => {
@@ -155,7 +155,7 @@ function JornadaTrabalho() {
               color="#fff"
               style={{ marginRight: 10 }}
             />
-            <Text fontSize={22}>Veículo: </Text>
+            <Text fontSize={22}>Veículo: {placa}</Text>
           </ContainerHorizontal>
           <Text fontSize={24}>JORNADA DE TRABALHO</Text>
           <Botao

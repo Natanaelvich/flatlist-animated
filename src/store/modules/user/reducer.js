@@ -5,6 +5,8 @@ const INITIAL_STATE = {
   id_motorista: null,
   motorista: null,
   logged: false,
+  placa: null,
+  idVeiculo: null,
 };
 
 export default function user(state = INITIAL_STATE, { type, payload }) {
@@ -31,6 +33,15 @@ export default function user(state = INITIAL_STATE, { type, payload }) {
         id_motorista: null,
         motorista: null,
         logged: false,
+      };
+    }
+
+    case '@user/ADD_INFOS_VEICULO': {
+      const { placa, idVeiculo } = payload;
+      return {
+        ...state,
+        placa,
+        idVeiculo,
       };
     }
 
