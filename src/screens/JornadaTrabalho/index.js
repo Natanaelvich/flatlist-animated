@@ -1,6 +1,6 @@
 /* eslint-disable react/style-prop-object */
 import React, { useCallback, useEffect } from 'react';
-import { Alert, Image, ScrollView, View } from 'react-native';
+import { Alert, Image, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -97,7 +97,7 @@ function JornadaTrabalho() {
         form.append('long', `${location.longitude}`);
       }
 
-      const response = await api.post(url, form);
+      await api.post(url, form);
     } catch (error) {
       console.log('err ', error);
     }

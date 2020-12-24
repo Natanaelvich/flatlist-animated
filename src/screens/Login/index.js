@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -7,10 +7,7 @@ import {
   Platform,
   UIManager,
 } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 
-import { useNavigation } from '@react-navigation/native';
-import { BorderlessButton } from 'react-native-gesture-handler';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import {
@@ -23,12 +20,7 @@ import {
   Opcoes,
   OpcoesButton,
 } from './styles';
-import {
-  colors,
-  token,
-  constante,
-  veirificarInternet,
-} from '../../core/helper';
+import { colors, token, veirificarInternet } from '../../core/helper';
 import api from '../../services/api';
 
 import Background from '../../components/Background';
@@ -43,7 +35,6 @@ if (
 }
 
 function Login() {
-  const navigation = useNavigation();
   const refSenha = useRef();
   const dispatch = useDispatch();
 

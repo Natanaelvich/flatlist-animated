@@ -28,6 +28,7 @@ const Localization = () => {
           }
         );
       } catch (error) {
+        console.log('error get location');
         console.log(error);
       }
     }

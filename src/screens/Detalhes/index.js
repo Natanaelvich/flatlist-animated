@@ -1,3 +1,4 @@
+/* eslint-disable react/style-prop-object */
 import React, { useState, useEffect } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
@@ -20,7 +21,7 @@ import { colors, constante } from '../../core/helper';
 
 function Detalhes() {
   const navigation = useNavigation();
-  const { motorista, id_motorista } = useSelector(state => state.user);
+  const { motorista } = useSelector(state => state.user);
 
   const [datas, setDatas] = useState({ inicio: '', fim: '' });
 

@@ -1,3 +1,4 @@
+/* eslint-disable react/style-prop-object */
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, TouchableOpacity, FlatList, Alert } from 'react-native';
 import { useSelector } from 'react-redux';
