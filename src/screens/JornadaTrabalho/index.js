@@ -108,79 +108,75 @@ function JornadaTrabalho() {
   }
 
   return (
-    <>
-      <StatusBar backgroundColor="#fff" style="dark" />
+    <ScrollView
+      contentContainerStyle={{
+        flexGrow: 1,
+        paddingTop: 20,
+      }}
+    >
+      <Background>
+        <Image
+          resizeMode="contain"
+          source={logo}
+          style={{ alignSelf: 'center', height: '80%', marginTop: 20 }}
+        />
+      </Background>
 
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          paddingTop: 20,
-        }}
-      >
-        <Background>
-          <Image
-            resizeMode="contain"
-            source={logo}
-            style={{ alignSelf: 'center', height: '80%', marginTop: 20 }}
-          />
-        </Background>
-
-        <ContainerStatus>
-          <ContainerLeft>
-            <Text fontSize={16} title>
-              Início da jornada
-            </Text>
-            <ContainerHorizontal>
-              <MaterialCommunityIcons
-                name="calendar-month"
-                size={50}
-                color="#fff"
-              />
-              <ContainerVertical>
-                <Text fontSize={16}>01/01/2020</Text>
-                <Text fontSize={16}>13:15:00</Text>
-              </ContainerVertical>
-            </ContainerHorizontal>
-          </ContainerLeft>
-          <ContainerRight onPress={irDetalhes}>
-            <MaterialCommunityIcons name="timer" size={50} color="#fff" />
+      <ContainerStatus>
+        <ContainerLeft>
+          <Text fontSize={16} title>
+            Início da jornada
+          </Text>
+          <ContainerHorizontal>
+            <MaterialCommunityIcons
+              name="calendar-month"
+              size={50}
+              color="#fff"
+            />
             <ContainerVertical>
-              <Text fontSize={20} title>
-                Status:
-              </Text>
-              <Text fontSize={16}>Não Iniciada</Text>
+              <Text fontSize={16}>01/01/2020</Text>
+              <Text fontSize={16}>13:15:00</Text>
             </ContainerVertical>
-          </ContainerRight>
-        </ContainerStatus>
+          </ContainerHorizontal>
+        </ContainerLeft>
+        <ContainerRight onPress={irDetalhes}>
+          <MaterialCommunityIcons name="timer" size={50} color="#fff" />
+          <ContainerVertical>
+            <Text fontSize={20} title>
+              Status:
+            </Text>
+            <Text fontSize={16}>Não Iniciada</Text>
+          </ContainerVertical>
+        </ContainerRight>
+      </ContainerStatus>
 
-        <BackgroundLocal>
-          <ContentJornada>
-            <ContainerHorizontal>
-              <MaterialCommunityIcons
-                name="steering"
-                size={45}
-                color="#fff"
-                style={{ marginRight: 10 }}
-              />
-              <Text fontSize={22}>Veículo: </Text>
-            </ContainerHorizontal>
-            <Text fontSize={24}>JORNADA DE TRABALHO</Text>
-            <Botao
-              principal
-              onPress={() => reportJornada('9', 'Inicio de Jornada')}
-            >
-              <TextoBotao principal>INICIAR</TextoBotao>
-            </Botao>
-            <Botao onPress={() => navigation.push('MotivoParada')}>
-              <TextoBotao>PARADA/MOTIVO</TextoBotao>
-            </Botao>
-            <Botao onPress={() => reportJornada('10', 'Fim de Jornada')}>
-              <TextoBotao>FIM</TextoBotao>
-            </Botao>
-          </ContentJornada>
-        </BackgroundLocal>
-      </ScrollView>
-    </>
+      <BackgroundLocal>
+        <ContentJornada>
+          <ContainerHorizontal>
+            <MaterialCommunityIcons
+              name="steering"
+              size={45}
+              color="#fff"
+              style={{ marginRight: 10 }}
+            />
+            <Text fontSize={22}>Veículo: </Text>
+          </ContainerHorizontal>
+          <Text fontSize={24}>JORNADA DE TRABALHO</Text>
+          <Botao
+            principal
+            onPress={() => reportJornada('9', 'Inicio de Jornada')}
+          >
+            <TextoBotao principal>INICIAR</TextoBotao>
+          </Botao>
+          <Botao onPress={() => navigation.push('MotivoParada')}>
+            <TextoBotao>PARADA/MOTIVO</TextoBotao>
+          </Botao>
+          <Botao onPress={() => reportJornada('10', 'Fim de Jornada')}>
+            <TextoBotao>FIM</TextoBotao>
+          </Botao>
+        </ContentJornada>
+      </BackgroundLocal>
+    </ScrollView>
   );
 }
 

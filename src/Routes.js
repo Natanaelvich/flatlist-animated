@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import { useSelector } from 'react-redux';
 import { constante } from './core/helper';
 import api from './services/api';
 
@@ -31,17 +32,24 @@ async function listaReq() {
 }
 
 const Routes = () => {
+  const { logged } = useSelector(state => state.user);
+
   useEffect(() => {
     listaReq();
-  });
+  }, []);
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login" headerMode="none">
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="JornadaTrabalho" component={JornadaTrabalho} />
-        <Stack.Screen name="Detalhes" component={Detalhes} />
-        <Stack.Screen name="MotivoParada" component={MotivoParada} />
+      <Stack.Navigator headerMode="none">
+        {!logged ? (
+          <Stack.Screen name="Login" component={Login} />
+        ) : (
+          <>
+            <Stack.Screen name="JornadaTrabalho" component={JornadaTrabalho} />
+            <Stack.Screen name="Detalhes" component={Detalhes} />
+            <Stack.Screen name="MotivoParada" component={MotivoParada} />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

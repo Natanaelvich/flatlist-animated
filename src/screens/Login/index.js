@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
 import {
   Container,
   Botao,
@@ -32,6 +33,7 @@ import api from '../../services/api';
 
 import Background from '../../components/Background';
 import logo from '../../assets/logo.png';
+import { signInSuccess } from '../../store/modules/user/actions';
 
 if (
   Platform.OS === 'android' &&
@@ -43,6 +45,7 @@ if (
 function Login() {
   const navigation = useNavigation();
   const refSenha = useRef();
+  const dispatch = useDispatch();
 
   const [login, setLogin] = useState('');
   const [senha, setSenha] = useState('');
@@ -57,18 +60,6 @@ function Login() {
       setSenha('1234');
     }
   }, []);
-
-  const verificarSessao = useCallback(async () => {
-    const hash = await AsyncStorage.getItem(constante.hash);
-
-    if (hash) {
-      navigation.navigate('JornadaTrabalho');
-    }
-  }, [navigation]);
-
-  useEffect(() => {
-    verificarSessao();
-  }, [verificarSessao]);
 
   async function handleLogin() {
     try {
@@ -98,27 +89,23 @@ function Login() {
         form.append('placa', placa);
         form.append('id_veiculo', idVeiculo);
       }
-      const motorista = {
-        id: response.data[0].id_motorista,
-        nome: response.data[0].motorista,
-      };
+      const {
+        hash,
+        id_user,
+        id_ciente,
+        id_motorista,
+        motorista,
+      } = response.data[0];
 
-      await AsyncStorage.setItem(constante.hash, response.data[0].hash);
-      await AsyncStorage.setItem(constante.idUser, response.data[0].id_user);
-      await AsyncStorage.setItem(
-        constante.idCliente,
-        response.data[0].id_ciente
+      dispatch(
+        signInSuccess({
+          hash,
+          id_user,
+          id_ciente,
+          id_motorista,
+          motorista,
+        })
       );
-      await AsyncStorage.setItem(
-        constante.motorista,
-        JSON.stringify(motorista)
-      );
-      await AsyncStorage.setItem(
-        constante.macros,
-        JSON.stringify(response.data[0].macros)
-      );
-
-      navigation.push('JornadaTrabalho');
     } catch (error) {
       if (error.response) {
         if (error.response.errormsg) {
@@ -134,7 +121,7 @@ function Login() {
     <Container
       contentContainerStyle={{
         flexGrow: 1,
-        marginTop: 12,
+        paddingTop: 12,
       }}
     >
       <Background>

@@ -3,9 +3,9 @@ export const signInRequest = (login, senha) => ({
   payload: { login, senha },
 });
 
-export const signInSuccess = (idUser, hashUser) => ({
+export const signInSuccess = payload => ({
   type: '@user/SIGN_IN_SUCCCESS',
-  payload: { idUser, hashUser },
+  payload,
 });
 
 export const signOut = () => ({
