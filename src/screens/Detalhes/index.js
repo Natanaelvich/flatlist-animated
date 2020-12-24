@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
+import { useSelector } from 'react-redux';
 import {
   Header,
   ContainerPrincipal,
@@ -19,22 +20,9 @@ import { colors, constante } from '../../core/helper';
 
 function Detalhes() {
   const navigation = useNavigation();
+  const { motorista, id_motorista } = useSelector(state => state.user);
 
-  const [motorista, setMotorista] = useState({
-    id: '',
-    nome: '',
-  });
   const [datas, setDatas] = useState({ inicio: '', fim: '' });
-
-  async function pegarInfoMotorista() {
-    const motoristaStringResponse = await AsyncStorage.getItem(
-      constante.motorista
-    );
-
-    const motoristaResponse = JSON.parse(motoristaStringResponse);
-
-    setMotorista(motoristaResponse);
-  }
 
   async function pegarDatas() {
     const responseDatasString = await AsyncStorage.getItem(constante.datas);
@@ -47,7 +35,6 @@ function Detalhes() {
   }
 
   useEffect(() => {
-    pegarInfoMotorista();
     pegarDatas();
   }, []);
 
@@ -80,7 +67,7 @@ function Detalhes() {
             <ContainerVertical>
               <Text fontSize={18}>MOTORISTA</Text>
               <Text fontSize={21} title>
-                {motorista.nome}
+                {motorista}
               </Text>
               {/* <Text fontSize={17}>Veículo BR1234</Text> */}
             </ContainerVertical>

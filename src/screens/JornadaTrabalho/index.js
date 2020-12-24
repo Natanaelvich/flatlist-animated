@@ -6,7 +6,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
-import { StatusBar } from 'expo-status-bar';
 import { constante, token, conectado } from '../../core/helper';
 import Background from '../../components/Background';
 import api from '../../services/api';
@@ -28,6 +27,7 @@ import {
 function JornadaTrabalho() {
   const navigation = useNavigation();
   const { location } = useSelector(state => state.utils);
+  const { hash, idUser, idCliente } = useSelector(state => state.user);
 
   const erroSessao = useCallback(
     macros => {
@@ -70,15 +70,11 @@ function JornadaTrabalho() {
     navigation.push('Detalhes');
   }
 
-  async function reportJornada(idMacro = '', descricaoMacro = '') {
+  async function reportJornada(idMacro, descricaoMacro) {
     try {
       const url = 'envio_jornada.php';
 
       const form = new FormData();
-
-      const hash = await AsyncStorage.getItem(constante.hash);
-      const idUser = await AsyncStorage.getItem(constante.idUser);
-      const idCliente = await AsyncStorage.getItem(constante.idCliente);
 
       const dataTest = new Date();
 
