@@ -5,13 +5,11 @@ import { colors } from '../../core/helper';
 import fundo from '../../assets/fundo-azul.jpg';
 
 export const Header = styled.View`
-  display: flex;
   flex: 1;
   flex-direction: row;
   align-items: center;
   padding: 45px 30px 45px 30px;
   background-color: ${colors.azulEscuro};
-  width: 100%;
   height: 100%;
   max-height: 110px;
 `;

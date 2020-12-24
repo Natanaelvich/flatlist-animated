@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { ImageBackground, Image } from 'react-native';
+import { ImageBackground } from 'react-native';
 
 import backgroundImage from '../assets/login/fundo.png';
 
