@@ -10,7 +10,7 @@
 </ p>
 
 
-   <h3>ItemAnimationEffect.js</h3>
+   <h3>ItemAnimationEffect</h3>
     
 <p  align='center'>
 <img src='https://user-images.githubusercontent.com/52014318/105633665-a5eec400-5e38-11eb-82df-415b8bc3b14e.gif' width='340' />
