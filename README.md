@@ -21,6 +21,12 @@
 <img src='https://user-images.githubusercontent.com/52014318/106359332-e9da4100-62f0-11eb-85fb-e8b6971ac00e.gif' width='340' />
 </ p>
 
+ <h3>DoubleSidedAnimatedGallery</h3>
+ 
+ <p  align='center'>
+<img src='https://user-images.githubusercontent.com/52014318/106394276-87f60600-63da-11eb-876d-e1c4747b8e40.gif' width='340' />
+</ p>
+
 ## Install
 
     $ git clone https://github.com/ORG/PROJECT.git
